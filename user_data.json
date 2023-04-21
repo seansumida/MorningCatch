@@ -1,0 +1,13 @@
+{
+    "itm352@hawaii.edu": {
+        "fullname": "itm352",
+        "password": "grader",
+        "repeat_password": "grader"
+    },
+    "jnhieu@hawaii.edu":{
+        "fullname": "Joey Nhieu",
+        "password": "jnhieu",
+        "repeat_password": "jnhieu"
+    }
+  
+} 
