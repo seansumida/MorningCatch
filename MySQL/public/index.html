@@ -1,0 +1,219 @@
+<!--Author: Joey Nhieu Index Page
+Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clothing_store.htm#-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="./functions.js">
+    var products_data;
+    var total = 0;
+    loadJSON('get_products_data', function (response) {
+        // Parsing JSON string into object
+        products_data = JSON.parse(response);
+    });
+    loadJSON('get_cart', function (response) {
+        // Parsing JSON string into object
+        shopping_cart = JSON.parse(response);
+        for (pk in shopping_cart) {
+            total += shopping_cart[pk].reduce((a, b) => a + b);
+        }
+    });
+
+    // get the query string
+    let params = (new URL(document.location)).searchParams;
+    if (params.has('products_key')) {
+        var this_product_key = params.get('products_key');
+    } else {
+        document.write('no products key in query string');
+        document.stop;
+    }
+    //nav_bar(this_product_key, products_data);
+    cart_total.innerHTML = total;
+</script>
+
+<title>Morning Catch</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./new_temp.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+</style>
+</head>
+<body class="w3-content" style="max-width:1200px">
+
+<!-- Sidebar/menu s-->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+  <div class="w3-container w3-display-container w3-padding-16">
+    <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+   <script> //  <h3 class="w3-wide"><b>Keycappa</b></h3></script>
+    <img src="./images/morningcatch/m_clogo.png" height = "200px" width="200px">
+    <br> 
+    <br>WHERE QUALITY AND TASTE MEET FRESHNESS
+  </div>
+  <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+    <a href="./index.html" class="w3-bar-item w3-button">Home</a>
+    <a href="./display_products.html" class="w3-bar-item w3-button">Menu</a>
+    <a href="./login_page.html" class="w3-bar-item w3-button">Locations</a>
+    <a href="./registration.html" class="w3-bar-item w3-button">Reviews</a>
+  </div>
+  <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
+ 
+</nav>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
+
+  <!-- Push down content on small screens -->
+  <div class="w3-hide-large" style="margin-top:83px"></div>
+  
+  <!-- Top header -->
+  <header class="w3-container w3-xlarge">
+    <p class="w3-left">Home</p>
+    <p class="w3-right">
+      <span id="cart_total">
+        <script>
+          let cart_total = 0;
+          loadJSON('get_cart_total', (response) => {
+            const parsedResponse = JSON.parse(response);
+            cart_total = parsedResponse.cart_total
+          });
+
+          document.write(cart_total);
+        </script>
+      </span>
+      <a href="./cart.html">
+      <i class="fa fa-shopping-cart w3-margin-right"></i></a>
+     
+    </p>
+  </header>
+
+  <!-- Image header -->
+  <div class="w3-display-container w3-container">
+    <img src="./images/morningcatch/bowls.jpg" alt="keycap3" style="width: 100%">
+    <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+      <h1 class="w3-jumbo w3-hide-small">New Menu Items</h1>
+      <h1 class="w3-hide-large w3-hide-medium">New Menu Items</h1>
+      <!--<h1 class="w3-hide-small">Artisan/Sets</h1> !-->
+      <p><a href="./products_display.html" class="w3-button w3-black w3-padding-large w3-large">ORDER NOW</a></p>
+    </div>
+  </div>
+
+    <br>
+
+  <!-- Product grid -->
+  
+  <div class="w3-row w3-grayscale">
+    <div class="w3-col l3 s6">
+      <div class="w3-container">
+        <div class="w3-display-container">
+          <img src="./images/morningcatch/sp_ahi2.jpg" style="width:100%">
+          <span class="w3-tag w3-display-topleft"><b class="w3-text-yellow">Best Seller</b></span>
+         
+        </div>
+        <p>Spicy Ahi<br>(1 Choice Bowl)<br><b>$15.00</b></p>
+      </div>
+    </div>
+
+    <div class="w3-col l3 s6">
+      <div class="w3-container">
+        <div class="w3-display-container">
+          <img src="./images/morningcatch/DSC04957.jpg" style="width:107%">
+          <span class="w3-tag w3-display-topleft"><b class="w3-text-yellow">Best Seller</b></span>
+       
+        </div>
+        <p>Hamachi and King Salmon<br>(2 Choice Bowl)<br><b>$18.00</b></p>
+      </div>
+    </div>
+
+    <div class="w3-col l3 s6">
+      <div class="w3-container">
+        <div class="w3-display-container">
+          <img src="./images/morningcatch/sh_limu.jpg" style="width:100%">
+          <span class="w3-tag w3-display-topleft"><b class="w3-text-yellow">Recommended</b></span>
+         
+        </div>
+        <p>Shoyu Limu<br>(1 Choice Bowl)<br><b>$15.00</b></p>
+      </div>
+    </div>
+
+    <div class="w3-col l3 s6">
+      <div class="w3-container">
+        <div class="w3-display-container">
+          <img src="./images/morningcatch/mas.jpg" style="width:100%">
+          <span class="w3-tag w3-display-topleft"><b class="w3-text-yellow">Recommended</b></span>
+
+        </div>
+        <p>Masago<br>(1 Choice Bowl)<br><b>$15.00</b></p>
+      </div>
+    </div>
+
+ 
+  
+  <!-- Footer -->
+  <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+    <div class="w3-row-padding">
+      <div class="w3-col s4">
+        <h4>Contact</h4>
+        <p>Questions? Go ahead.</p>
+        <form action="/action_page.php" target="_blank">
+          <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Name" required></p>
+          <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
+          <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Subject" required></p>
+          <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Message" required></p>
+          <button type="submit" class="w3-button w3-block w3-black">Send</button>
+        </form>
+      </div>
+
+      <div class="w3-col s4">
+        <h4>About</h4>
+        <p><a href="./info_page.html">About us</a></p>
+        <p><a href="./info_page.html">Order Customization</a></p>
+        <p><a href="./info_page.html">Help</a></p>
+      </div>
+
+      <div class="w3-col s4 w3-justify" id="info">
+        <h4>Morning Catch</h4>
+        <p><i class="fa fa-fw fa-map-marker"></i> Address: Oahu Market <br>145 N King St # 12, Honolulu, HI 96817</p>
+        <p><i class="fa fa-fw fa-phone"></i> Phone: 808-840-7155</p>
+        <p><i class="fa fa-fw fa-envelope"></i> Email: </p>
+        <h4>We accept</h4>
+        <p><i class="fa fa-fw fa-credit-card"></i> Credit Card
+        <p><i class="fa fa-fw fa-cc-paypal"></i> Paypal/Venmo</p>
+        <br>
+        <i class="fa fa-instagram w3-hover-opacity w3-large"></i>
+        <i class="fa fa-yelp w3-hover-opacity w3-large"></i>
+
+      </div>
+    </div>
+  </footer>
+
+  <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
+
+  <!-- End page content -->
+</div>
+
+
+
+<script>
+
+
+
+// Open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+
+</body>
+</html>

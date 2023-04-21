@@ -1,0 +1,139 @@
+<!--Author Joey Nhieu Assignment 3 Invoice Page: 
+code used from previous invoices e.g. Invoice 3 , Assignment 2 Invoice
+Invoice layout reference: https://www.bootdey.com/snippets/view/Simple-invoice-page#html-->
+<!-- <script src="./product_data.js" type="text/javascript"> </script> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./invoice.css">
+    <title>Document</title>
+		<script src="./functions.js"></script>
+		<script>
+			const urlParams = new URLSearchParams(window.location.search);
+			 var email = urlParams.get('email');
+			 loadJSON('get_products_data', function (response) {	 
+				 // Parsing JSON string into object
+				 products_data = JSON.parse(response);
+			 });     
+			 loadJSON('get_cart', function (response) {	 
+				 // Parsing JSON string into object
+				 shopping_cart = JSON.parse(response);
+			 });
+			 loadJSON('calc_cart', function (response) {
+				 calc_cart = JSON.parse(response);
+			 })
+		 </script>
+</head>
+<body>
+    
+
+
+
+	<div class="container bootstrap snippets bootdey">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 text-left">
+						
+						<div class="client">
+						<h4><strong>Login Successful! <script>document.write(email)</script> Here is your invoice:</strong></h4>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-sm-6 text-right">
+					<div class="payment">
+					<h4><strong>Payment</strong> Details</h4>
+					<ul class="list-unstyled">
+						<li><strong>Store Name:</strong> KeyCappa</li>
+						<li><strong>Account Number:</strong> 01234xxxx</li>
+                        <li><strong>Invoice Number:</strong> 01234xxxx</li>
+					</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-condensed nomargin">
+					<thead>
+						<tr>
+							<th>Item Name</th>
+							<th>Quantity</th>
+							<th>Unit Price</th>
+							<th>Extended Price</th>
+						</tr>
+					</thead>
+					<script> 
+						for (let product_key of Object.keys(shopping_cart)) {
+          		for (let product_name of Object.keys(shopping_cart[product_key])) {
+								product = products_data[product_key].find(product => product.name === product_name);
+								quantity = shopping_cart[product_key][product_name];
+								extended_price = quantity * product.price;
+
+								document.write(`
+									<tbody>
+										<tr>	
+											<td> 
+												<div><strong>${product_name}</strong></div>
+											</td>  
+											<td>${quantity}</td>
+											<td>$ ${product.price}</td>
+											<td>$ ${extended_price}</td>
+										</tr>
+									</tbody>
+								`)
+							}
+						}
+					</script>
+				</table>
+			</div>
+
+			<hr class="nomargin-top">
+			<div class="row">
+				<div class="col-sm-6 text-left">
+					
+					<p class="nomargin nopadding">
+						<strong>Note:</strong> 
+						Please see instructions for installation.
+						<h4><strong>Contact</strong> Details</h4>
+					</p><br><!-- no P margin for printing - use <br> instead -->
+
+					<address>
+						PO Box 21132 <br>
+						Some street 2355 USA<br>
+						Phone: 1-808-956-8111 <br>
+						Fax: 1-808-956-8111 <br>
+						Email:keycappa@hawaii.edu
+					</address>
+				</div>
+
+				<div class="col-sm-6 text-right">
+					<ul class="list-unstyled">
+						<li><strong>Subtotal: </strong>  $ <script>document.write(calc_cart.subtotal);</script></li>
+						<li><strong>Tax @ 5.75%:</strong>  $<script>document.write(calc_cart.sales_tax.toFixed(2));</script></li>
+						<li><strong>Shipping:</strong> $ <script>document.write(calc_cart.shipping_cost.toFixed(2));</script></li>
+						<li><strong>Grand Total:</strong> $ <script>document.write(calc_cart.grand_total.toFixed(2));</script></li>
+					</ul>     
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default text-right">
+		<div class="panel-body">
+			<a class="btn btn-success" href="#" target="_blank"><i class="fa fa-print"></i> PRINT INVOICE</a>
+		</div>
+	</div>
+</div>
+
+</body>
+<footer>
+	Thank you for your purchase ! <script>
+
+	</script>
+</footer>
+
+</html>

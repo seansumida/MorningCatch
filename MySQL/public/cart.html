@@ -1,0 +1,214 @@
+<!--Author: Joey Nhieu Cart Page
+Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clothing_store.htm#-->
+<head>
+    <script src="./functions.js"></script>
+    <script>
+
+      
+        var products_data;
+        loadJSON('get_products_data', function (response) {
+            // Parsing JSON string into object
+            products_data = JSON.parse(response);
+        });
+        loadJSON('get_cart', function (response) {
+            // Parsing JSON string into object
+            shopping_cart = JSON.parse(response);
+        });
+        console.log(products_data)
+
+        //nav_bar('', products_data);
+    </script>
+    <title>Keycappa</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./new_temp.css">
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .w3-sidebar a {font-family: "Roboto", sans-serif}
+    body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+    </style>
+  </head>
+  
+  <!-- Sidebar/menu s-->
+  <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+      <div class="w3-container w3-display-container w3-padding-16">
+        <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
+       <script> //  <h3 class="w3-wide"><b>Keycappa</b></h3></script>
+        <img src="./images/logo.png" height = "200px" width="200px">
+      </div>
+      <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+        <a href="./index.html" class="w3-bar-item w3-button">Home</a>
+        <a href="./display_products.html" class="w3-bar-item w3-button">Products</a>
+        <a href="./login_page.html" class="w3-bar-item w3-button">Login</a>
+        <a href="./registration.html" class="w3-bar-item w3-button">Register</a>
+      </div>
+      <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
+      <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subscribe</a>
+    </nav>
+    
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left:250px">
+    
+      
+      
+      <!-- Top header -->
+      <header class="w3-container w3-xlarge">
+        <p class="w3-left">Products</p>
+        <p class="w3-right">
+            <span id="cart_total">
+              <script>
+                let cart_total = 0;
+                loadJSON('get_cart_total', (response) => {
+                  const parsedResponse = JSON.parse(response);
+                  cart_total = parsedResponse.cart_total
+                });
+
+                document.write(cart_total);
+              </script>
+            </span>
+          <a href="./cart.html">
+          <i class="fa fa-shopping-cart w3-margin-right"></i></a>
+          <a href="./product_search.html">
+           </i></a> 
+        </p>
+  
+      
+    
+      </header>
+        <br>
+    <body>
+      <!-- Product grid -->
+   
+      <h2>You have in your shopping cart:</h2> 
+  
+    <div class="hidden" id="cart"> 
+      <script>
+        for (let product_key of Object.keys(shopping_cart)) {
+          for (let product_name of Object.keys(shopping_cart[product_key])) {
+            document.write(`
+              <p class ="prodcenter">
+                <img src=${products_data[product_key].find(product => product.name === product_name).image} style="width:50%">
+              </p>
+  
+              <p class ="prodcentertext">
+                ${products_data[product_key].find(product => product.name === product_name).name}<br><b>
+                ${products_data[product_key].find(product => product.name === product_name).price}</b><br>
+                Available: ${products_data[product_key].find(product => product.name === product_name).stock_avl}
+                <br><b> Quantity ${shopping_cart[product_key][product_name]} </b>
+              </p> 
+  
+              <p class="prodcenter">
+                <form action='/update_cart' method="GET">
+                  <input type="hidden" name="product_key" value="${product_key}">
+                  <input type="hidden" name="product_name" value="${product_name}">
+                  <input type="submit" name="update" value="Add">
+                </form>
+                <form action='/update_cart' method="GET">
+                  <input type="hidden" name="product_key" value="${product_key}">
+                  <input type="hidden" name="product_name" value="${product_name}">
+                  <input type="submit" name="update" value="Remove">
+                </form>
+              </p>
+            `);
+          }
+        }
+      </script>
+    </div>
+    <div id="form">
+      <form action="/login" method=GET> 
+        Login to accept terms and proceed with check out <input type="button"  value="Login" id = "Login"
+         onclick="window.location='./login_page.html?' + location.search;">
+      </form>
+    </div>
+    <div id="inv">
+      <form action="" method=GET> 
+        Proceed with check out <input type="button"  value="Checkout" id = "Checkout"
+         onclick="window.location='./invoice.html?' + location.search;">
+      </form>
+    </div>
+    <script>
+      const cookies = document.cookie;
+      const sessionId = cookies.split('; ').find(cookie => cookie.startsWith('session_id'));
+
+      if (sessionId) {
+        document.getElementById('form').classList.toggle('hidden');
+        document.getElementById('cart').classList.toggle('hidden');
+      }
+    </script>
+    <script>  
+    
+    </script>
+      
+  
+      <!-- Footer -->
+      <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+          <div class="w3-row-padding">
+            <div class="w3-col s4">
+              <h4>Contact</h4>
+              <p>Questions? Go ahead.</p>
+              <form action="/action_page.php" target="_blank">
+                <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Name" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Subject" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Message" required></p>
+                <button type="submit" class="w3-button w3-block w3-black">Send</button>
+              </form>
+            </div>
+      
+            <div class="w3-col s4">
+              <h4>About</h4>
+              <p><a href="./info_page.html">About us</a></p>
+              <p><a href="./info_page.html">Shipment</a></p>
+              <p><a href="./info_page.html">Return</a></p>
+              <p><a href="./info_page.html">Help</a></p>
+            </div>
+      
+            <div class="w3-col s4 w3-justify" id="info">
+              <h4>Keycappa, Inc.</h4>
+              <p><i class="fa fa-fw fa-map-marker"></i> Address: 2500 Campus Rd, Honolulu, HI 96822; UH Manoa</p>
+              <p><i class="fa fa-fw fa-phone"></i> Phone: 808-956-8111</p>
+              <p><i class="fa fa-fw fa-envelope"></i> Email: keycappa@hawaii.edu</p>
+              <h4>We accept</h4>
+              <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>
+              <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>
+              <br>
+              <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>
+              <i class="fa fa-instagram w3-hover-opacity w3-large"></i>
+              <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>
+              <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>
+              <i class="fa fa-twitter w3-hover-opacity w3-large"></i>
+              <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>
+            </div>
+          </div>
+        </footer>
+      
+        <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
+      
+        <!-- End page content -->
+      </div>
+      
+      
+      
+      <script>
+      
+      
+      // Open and close sidebar
+      function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+      }
+       
+      function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("myOverlay").style.display = "none";
+      }
+      </script>
+      
+      
+      </body>
+      </html>
+      
