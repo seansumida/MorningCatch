@@ -7,7 +7,7 @@ var nodemailer = require('nodemailer');
 var cookieParser = require('cookie-parser');
 var fs = require('fs');
 var qs = require('qs');
-const queryString = require('query-string');
+
 const res = require('express/lib/response');
 //Defines file in variable for later usage
 var filename = 'user_data.json';
