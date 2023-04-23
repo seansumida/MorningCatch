@@ -45,7 +45,7 @@ app.post("/process_login", function (req, res) {
       res.cookie('session_id', req.sessionID, {maxAge: 5 * 60 * 1000});
       console.log(req.cookies);
     //  response.send(`cookie sent for ${users_name}`);
-    res.redirect('/invoice.html?' + 'email=' + req.body.email);
+    res.redirect('/index.html?');
     //This redirects to the invoice if the appropriate password is entered
     } else { //Wrong password
         LogError.push = ('Invalid Password');
