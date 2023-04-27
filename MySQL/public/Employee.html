@@ -103,45 +103,62 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
       var clockInTime = null;
       var clockOutTime = null;
       var clockDisplayInterval = null;
-  
+      var date = new Date();
+      var numClockIns = 0;
+      var numClockOuts = 0;
+      var totalWorkTime = 0;
+    
       function clockIn() {
         clockInTime = new Date();
         clockOutTime = null;
         clockDisplayInterval = setInterval(displayClock, 1000);
         document.getElementById("clock-in-btn").disabled = true;
         document.getElementById("clock-out-btn").disabled = false;
+        numClockIns++;
       }
-  
+    
       function clockOut() {
         clockOutTime = new Date();
         clearInterval(clockDisplayInterval);
         displayClock();
         document.getElementById("clock-in-btn").disabled = false;
         document.getElementById("clock-out-btn").disabled = true;
+        numClockOuts++;
+        if (clockInTime && clockOutTime) {
+          var diffInMs = clockOutTime - clockInTime;
+          totalWorkTime += diffInMs;
+        }
       }
-  
+    
       function displayClock() {
-  var now = new Date();
-  var clockDisplay = "";
-  if (clockInTime) {
-    clockDisplay += "Clock-In Time: " + clockInTime.toLocaleTimeString() + "<br>";
-  }
-  if (clockOutTime) {
-    clockDisplay += "Clock-Out Time: " + clockOutTime.toLocaleTimeString() + "<br>";
-  }
-  if (clockInTime && clockOutTime) {
-    var diffInMs = clockOutTime - clockInTime;
-    var diffInSec = diffInMs / 1000;
-    var hours = Math.floor(diffInSec / 3600);
-    var minutes = Math.floor((diffInSec % 3600) / 60);
-    var seconds = Math.floor(diffInSec % 60);
-    clockDisplay += "Time Worked: " + hours + "h " + minutes + "m " + seconds + "s";
-  }
-  document.getElementById("clock-display").innerHTML = clockDisplay;
-}
-
+        var now = new Date();
+        var clockDisplay = "";
+        if (clockInTime) {
+          clockDisplay += "Clock-In Time: " + clockInTime.toLocaleTimeString() + "<br>";
+        }
+        if (clockOutTime) {
+          clockDisplay += "Clock-Out Time: " + clockOutTime.toLocaleTimeString() + "<br>";
+        }
+        if (clockInTime && clockOutTime) {
+          var diffInMs = clockOutTime - clockInTime;
+          var diffInSec = diffInMs / 1000;
+          var hours = Math.floor(diffInSec / 3600);
+          var minutes = Math.floor((diffInSec % 3600) / 60);
+          var seconds = Math.floor(diffInSec % 60);
+          clockDisplay += "Time Worked: " + hours + "h " + minutes + "m " + seconds + "s";
+        }
+        clockDisplay += "<br>Date: " + date.toLocaleDateString() + "<br>";
+        clockDisplay += "Number of Clock-Ins Today: " + numClockIns + "<br>";
+        clockDisplay += "Number of Clock-Outs Today: " + numClockOuts + "<br>";
+        var totalHours = Math.floor(totalWorkTime / 3600000);
+        var totalMinutes = Math.floor((totalWorkTime % 3600000) / 60000);
+        var totalSeconds = Math.floor((totalWorkTime % 60000) / 1000);
+        clockDisplay += "Total Time Worked Today: " + totalHours + "h " + totalMinutes + "m " + totalSeconds + "s";
+        document.getElementById("clock-display").innerHTML = clockDisplay;
+      }
     </script>
   </body>
+  
   
     <br>
 
