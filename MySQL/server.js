@@ -289,56 +289,6 @@ app.get("/checkout", function (request, response) {
     }
 }
   invoice_str += '</table>';
-/*
-░██████╗░██╗░░░██╗███████╗██████╗░██╗███████╗░██████╗
-██╔═══██╗██║░░░██║██╔════╝██╔══██╗██║██╔════╝██╔════╝
-██║██╗██║██║░░░██║█████╗░░██████╔╝██║█████╗░░╚█████╗░
-╚██████╔╝██║░░░██║██╔══╝░░██╔══██╗██║██╔══╝░░░╚═══██╗
-░╚═██╔═╝░╚██████╔╝███████╗██║░░██║██║███████╗██████╔╝
-░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝╚══════╝╚═════╝░
-*/
-function popular_query(POST, response){
-  if(POST['category'] == 'most'){
-    category = JSON.stringify(POST['category']);
-    query = "SELECT guestNo, guestName FROM Guest"
-    con.query(query, function(err, result, fields){
-      if (err) throw err;
-      console.log(result);
-      var res_string = JSON.stringify(result);
-      var res_json = JSON.parse(res_string);
-      console.log(res_json);
-      //make table for output
-      response_form = `<form action="inventory_level.html" method="GET">`;
-      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
-      for (i in res_json){
-        response_form += `<tr><td> ${res_json[i].guestNo}</td>`;
-        response_form += `<td> ${res_json[i].guestName}</td>`;
-      }
-      response_form += "</table>";
-      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
-      response.send(response_form);
-    });
-    
-  } /*else if (POST['category'] == 'least'){
-    category = JSON.stringify(POST['category']);
-    /*query = "SELECT * FROM view_popular_item "
-    con.query(query, function(err, result, fields){
-      if (err) throw err;
-      console.log(result);
-      var res_string = JSON.stringify(result);
-      var res_json = JSON.parse(res_string);
-      console.log(res_json);
-      //make table for output
-    });
-    response.send(category);
-  }*/ else{
-    response.send("Try Again");
-  }
-}
-app.post("/popular", function(request, response){
-  let POST = request.body;
-  popular_query(POST, response);
-});
 
 //taken from Prof Ports assignment 3 example code
 // Set up mail server. Only will work on UH Network due to security restrictions
@@ -369,6 +319,62 @@ app.post("/popular", function(request, response){
   });
 
 });
-
+/*
+░██████╗░██╗░░░██╗███████╗██████╗░██╗███████╗░██████╗
+██╔═══██╗██║░░░██║██╔════╝██╔══██╗██║██╔════╝██╔════╝
+██║██╗██║██║░░░██║█████╗░░██████╔╝██║█████╗░░╚█████╗░
+╚██████╔╝██║░░░██║██╔══╝░░██╔══██╗██║██╔══╝░░░╚═══██╗
+░╚═██╔═╝░╚██████╔╝███████╗██║░░██║██║███████╗██████╔╝
+░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝╚══════╝╚═════╝░
+*/
+function popular_query(POST, response){
+  if(POST['category'] == 'most'){
+    category = JSON.stringify(POST['category']);
+    query = "SELECT guestNo, guestName FROM Guest"
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="popular.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].guestNo}</td>`;
+        response_form += `<td> ${res_json[i].guestName}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else if (POST['category'] == 'least'){
+    category = JSON.stringify(POST['category']);
+    query = "SELECT * FROM Guest "
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="popular.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].guestAddress}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/popular", function(request, response){
+  let POST = request.body;
+  popular_query(POST, response);
+});
 app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
