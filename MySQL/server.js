@@ -7,8 +7,23 @@ var nodemailer = require('nodemailer');
 var cookieParser = require('cookie-parser');
 var fs = require('fs');
 var qs = require('qs');
-const queryString = require('query-string');
 const res = require('express/lib/response');
+var mysql = require('mysql');
+
+console.log("Connecting to localhost..."); 
+var con = mysql.createConnection({
+  host: '127.0.0.1',
+  user: "root",
+  port: 3306,
+  database: "Travel",
+  password: ""
+});
+
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 //Defines file in variable for later usage
 var filename = 'user_data.json';
 app.use(cookieParser());
@@ -45,7 +60,7 @@ app.post("/process_login", function (req, res) {
       res.cookie('session_id', req.sessionID, {maxAge: 5 * 60 * 1000});
       console.log(req.cookies);
     //  response.send(`cookie sent for ${users_name}`);
-    res.redirect('/invoice.html?' + 'email=' + req.body.email);
+    res.redirect('/index.html?');
     //This redirects to the invoice if the appropriate password is entered
     } else { //Wrong password
         LogError.push = ('Invalid Password');
@@ -274,8 +289,56 @@ app.get("/checkout", function (request, response) {
     }
 }
   invoice_str += '</table>';
-
-
+/*
+░██████╗░██╗░░░██╗███████╗██████╗░██╗███████╗░██████╗
+██╔═══██╗██║░░░██║██╔════╝██╔══██╗██║██╔════╝██╔════╝
+██║██╗██║██║░░░██║█████╗░░██████╔╝██║█████╗░░╚█████╗░
+╚██████╔╝██║░░░██║██╔══╝░░██╔══██╗██║██╔══╝░░░╚═══██╗
+░╚═██╔═╝░╚██████╔╝███████╗██║░░██║██║███████╗██████╔╝
+░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝╚══════╝╚═════╝░
+*/
+function popular_query(POST, response){
+  if(POST['category'] == 'most'){
+    category = JSON.stringify(POST['category']);
+    query = "SELECT guestNo, guestName FROM Guest"
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="inventory_level.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].guestNo}</td>`;
+        response_form += `<td> ${res_json[i].guestName}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } /*else if (POST['category'] == 'least'){
+    category = JSON.stringify(POST['category']);
+    /*query = "SELECT * FROM view_popular_item "
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+    });
+    response.send(category);
+  }*/ else{
+    response.send("Try Again");
+  }
+}
+app.post("/popular", function(request, response){
+  let POST = request.body;
+  popular_query(POST, response);
+});
 
 //taken from Prof Ports assignment 3 example code
 // Set up mail server. Only will work on UH Network due to security restrictions

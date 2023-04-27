@@ -24,8 +24,8 @@
   }
   
   // Retrieve the min and max from the POST array
-  $min = $_POST['Min_Price'];
-  $max = $_POST['Max_Price'];
+ // $min = $_POST['Min_Price'];
+  // $max = $_POST['Max_Price'];
 
   // Now run the query with the user's parameters
   $query = "Select * from room where price > $min and price < $max";
@@ -53,6 +53,6 @@
 ?>
 
 <Form Action="example.php" method="POST">
-<input type="submit" value="Another Query?">
+<input type="submit" value="Refresh">
 </Form>
 
