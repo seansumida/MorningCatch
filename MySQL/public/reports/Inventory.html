@@ -3,13 +3,12 @@ Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clot
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Keycappa</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./functions.js"></script>
-<link rel="stylesheet" href="./new_temp.css">
-<link rel="stylesheet" href="./main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="../functions.js"></script>
+<link rel="stylesheet" href="../new_temp.css">
+<link rel="stylesheet" href="../main.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -25,13 +24,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div class="w3-container w3-display-container w3-padding-16">
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
    <script> //  <h3 class="w3-wide"><b>Keycappa</b></h3></script>
-    <img src="./images/logo.png" height = "200px" width="200px">
+    <img src="../images/logo.png" height = "200px" width="200px">
   </div>
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-    <a href="./index.html" class="w3-bar-item w3-button">Home</a>
-    <a href="./display_products.html" class="w3-bar-item w3-button">Products</a>
-    <a href="./login_page.html" class="w3-bar-item w3-button">Login</a>
-    <a href="./registration.html" class="w3-bar-item w3-button">Register</a>
+    <a href="../index.html" class="w3-bar-item w3-button">Home</a>
+    <a href="../display_products.html" class="w3-bar-item w3-button">Products</a>
+    <a href="../login_page.html" class="w3-bar-item w3-button">Login</a>
+    <a href="../registration.html" class="w3-bar-item w3-button">Register</a>
   </div>    
   <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a> 
@@ -46,7 +45,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left">Queries</p>
+    <p class="w3-left">Inventory</p>
     <p class="w3-right">
       <span id="cart_total">
         <script>
@@ -59,7 +58,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
           document.write(cart_total);
         </script>
       </span>
-      <a href="./cart.html">
+      <a href="../cart.html">
       <i class="fa fa-shopping-cart w3-margin-right"></i></a>
     </p>
   </header>
@@ -67,25 +66,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <br>
 
   <!-- Product grid -->
-  
-  <ul id="queries"></ul>
- <script>
-    const queries = document.getElementById("queries");
-const links = [
-  { text: "Popular", url: "./queries/popular.html" },
-  { text: "Customer Orders", url: "./queries/Customer.html" }
-];
-
-for (let i = 0; i < links.length; i++) {
-  const listItem = document.createElement("li");
-  const link = document.createElement("a");
-  link.textContent = links[i].text;
-  link.href = links[i].url;
-  listItem.appendChild(link);
-  queries.appendChild(listItem);
-}
-  </script>
-  
+  <form action="/inventory" method="POST">
+    Inventory Report
+    <br>
+    <input type="submit" id="inventory" value="View">
+  </form>
   <!-- Footer -->
   <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
     <div class="w3-row-padding">
@@ -103,10 +88,10 @@ for (let i = 0; i < links.length; i++) {
 
       <div class="w3-col s4">
         <h4>About</h4>
-        <p><a href="./info_page.html">About us</a></p>
-        <p><a href="./info_page.html">Shipment</a></p>
-        <p><a href="./info_page.html">Return</a></p>
-        <p><a href="./info_page.html">Help</a></p>
+        <p><a href="../info_page.html">About us</a></p>
+        <p><a href="../info_page.html">Shipment</a></p>
+        <p><a href="../info_page.html">Return</a></p>
+        <p><a href="../info_page.html">Help</a></p>
       </div>
 
       <div class="w3-col s4 w3-justify" id="info">

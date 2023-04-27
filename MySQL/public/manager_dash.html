@@ -3,10 +3,9 @@ Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clot
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Keycappa</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="./functions.js"></script>
 <link rel="stylesheet" href="./new_temp.css">
 <link rel="stylesheet" href="./main.css">
@@ -46,7 +45,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left">Queries</p>
+    <p class="w3-left">Manager Dashboard</p>
     <p class="w3-right">
       <span id="cart_total">
         <script>
@@ -67,13 +66,13 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <br>
 
   <!-- Product grid -->
-  
-  <ul id="queries"></ul>
+  <ul id="reports"></ul>
  <script>
-    const queries = document.getElementById("queries");
+    const reports = document.getElementById("reports");
 const links = [
-  { text: "Popular", url: "./queries/popular.html" },
-  { text: "Customer Orders", url: "./queries/Customer.html" }
+  { text: "Employee Hours", url: "/reports/Employee.html" },
+  { text: "Sales", url: "/reports/Sales.html" },
+  { text: "Inventory", url: "/reports/Inventory.html" }
 ];
 
 for (let i = 0; i < links.length; i++) {
@@ -82,7 +81,7 @@ for (let i = 0; i < links.length; i++) {
   link.textContent = links[i].text;
   link.href = links[i].url;
   listItem.appendChild(link);
-  queries.appendChild(listItem);
+  reports.appendChild(listItem);
 }
   </script>
   
