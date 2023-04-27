@@ -83,10 +83,6 @@ VALUES ('John Smith', 102345678, 'M', 25000.00, '123 Main St', 25, 'Jane Brown')
 ('Kelly Green', 107890123, 'F', 28000.00, '543 Oak St', 23, 'Jane Brown'),
 ('Chris White', 109876543, 'F', 27000.00, '321 Elm St', 38, 'Bill Miller');
 
-
-
-
-
 INSERT INTO Customer (C_id, C_addrs, Phone_number, C_name, C_bdate)
 VALUES (123456789, '123 Main St', 8085551234, 'John Doe', '1990-01-01'),
   (234567890, '456 Oak St', 8085555678, 'Jane Smith', '2004-02-15'),
@@ -134,7 +130,6 @@ VALUES (123456789, 100123456, 15.99, 3),
 (901234567, 801234567, 6.75, 1),
 (987654321, 900876543, 33.00, 3);
 
-
 INSERT INTO Contains (P_id, S_id) 
 VALUES (100123456, 1),
 (100987654, 1),
@@ -163,7 +158,7 @@ SELECT a.P_id AS Item_No, a.Product_name, a.Price, a.Quantity, a.Price * a.Quant
 FROM Product a
 
 CREATE VIEW view_Inventory_report AS 
-SELECT a.P_id AS Item_No, b.Supplier_name, a.P_id AS Stock_Quantity, a.Price AS Cost_Per_Item, a.P_id AS Inv_value, a.P_id AS Active
+SELECT a.P_id AS Item_No, a.Product_name, b.Supplier_name, a.Quantity AS Stock_Quantity, a.Price AS Cost_Per_Item, a.Price * a.Quantity AS Inv_value
 FROM Product a
 INNER JOIN Supplier b ON b.P_id = a.P_id
 
