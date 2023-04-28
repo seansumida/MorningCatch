@@ -1,0 +1,199 @@
+CREATE DATABASE FreshCatch_DB;
+
+CREATE TABLE Employee (
+  Ename VARCHAR(50) NOT NULL,
+  S_id INT(2) NOT NULL,
+  gender CHAR(1),
+  salary DECIMAL(10, 2),
+  address VARCHAR(50),
+  hours_worked INT(2),
+  Super_name VARCHAR(50),
+  PRIMARY KEY (Ename)
+);
+
+CREATE TABLE Customer (
+  C_id INT(9) NOT NULL,
+  C_addrs VARCHAR(50),
+  Phone_number BIGINT(10),
+  C_name VARCHAR(50) NOT NULL,
+  C_bdate DATE,
+  PRIMARY KEY (C_id)
+);
+
+CREATE TABLE Product (
+  P_id INT(9) NOT NULL,
+  Quantity INT(3),
+  Price DECIMAL(10, 2),
+  Product_name VARCHAR(70) NOT NULL,
+  PRIMARY KEY (P_id)
+);
+
+CREATE TABLE Store (
+  S_id INT(2) NOT NULL,
+  Location_name VARCHAR(50) NOT NULL,
+  Location_addrs VARCHAR(70),
+  Lphone_number BIGINT(10),
+  PRIMARY KEY (S_id)
+);
+
+CREATE TABLE Supplier (
+  Supplier_name VARCHAR(70) NOT NULL,
+  PRIMARY KEY (Supplier_name)
+);
+
+
+CREATE TABLE Purchases (
+  C_id INT(9) NOT NULL,
+  P_id INT(9) NOT NULL,
+  Amount_spent DECIMAL(6, 2),
+  Visit_amt INT(5),
+  PRIMARY KEY (C_id, P_id),
+  FOREIGN KEY (C_id) REFERENCES Customer(C_id),
+  FOREIGN KEY (P_id) REFERENCES Product(P_id)
+);
+
+CREATE TABLE Contains (
+  P_id INT(9) NOT NULL,
+  S_id INT(2) NOT NULL,
+  PRIMARY KEY (P_id, S_id),
+  FOREIGN KEY (P_id) REFERENCES Product(P_id),
+  FOREIGN KEY (S_id) REFERENCES Store(S_id)
+);
+
+CREATE TABLE Supplies (
+  Supplier_name VARCHAR(50) NOT NULL,
+  P_id INT(9) NOT NULL,
+  PRIMARY KEY (Supplier_name, P_id),
+  FOREIGN KEY (Supplier_name) REFERENCES Supplier(Supplier_name),
+  FOREIGN KEY (P_id) REFERENCES Product(P_id)
+);
+
+
+/* inserts */
+
+INSERT INTO Employee (Ename, S_id, gender, salary, address, hours_worked, Super_name)
+VALUES ('John Smith', 102345678, 'M', 25000.00, '123 Main St', 25, 'Jane Brown'),
+('Jane Brown', 104567890, 'F', 50000.00, '456 Oak St', 30, NULL),
+('Bob Johnson', 103456789, 'M', 35000.00, '789 Maple St', 33, 'Jane Brown'),
+('Sally Williams', 101234567, 'F', 20000.00, '321 Elm St', 28, 'Bill Miller'),
+('Fred Thompson', 108901234, 'M', 25000.00, '987 Pine St', 24, 'Jane Brown'),
+('Amy Lee', 105678901, 'F', 22000.00, '654 Cedar St', 37, 'Bill Miller'),
+('Bill Miller', 109012345, 'M', 50000.00, '234 Birch St', 26, NULL),
+('Tom Brown', 106789012, 'M', 34000.00, '876 Walnut St', 35, 'Jane Brown'),
+('Kelly Green', 107890123, 'F', 28000.00, '543 Oak St', 23, 'Jane Brown'),
+('Chris White', 109876543, 'F', 27000.00, '321 Elm St', 38, 'Bill Miller');
+
+INSERT INTO Customer (C_id, C_addrs, Phone_number, C_name, C_bdate)
+VALUES (123456789, '123 Main St', 8085551234, 'John Doe', '1990-01-01'),
+  (234567890, '456 Oak St', 8085555678, 'Jane Smith', '2004-02-15'),
+  (345678901, '789 Maple St', 8085552468, 'Bob Johnson', '1988-07-22'),
+  (456789012, '321 Elm St', 8085557890, 'Sally Williams', '1995-12-31'),
+  (567890123, '987 Pine St', 8085553412, 'Fred Thompson', '2003-05-14'),
+  (678901234, '654 Cedar St', 8085557654, 'Amy Lee', '1992-09-05'),
+  (789012345, '234 Birch St', 8085559087, 'Bill Miller', '2000-11-11'),
+  (890123456, '876 Walnut St', 8085554321, 'Tom Brown', '1991-04-03'),
+  (901234567, '543 Oak St', 8085558765, 'Kelly Green', '2000-08-23'),
+  (987654321, '321 Elm St', 8085552468, 'Chris White', '1994-06-17');
+
+INSERT INTO Product (P_id, Quantity, Price, Product_name)
+VALUES (100987654, 100, 9.99, 'Ahi Poke Bowl'),
+(201234567, 50, 12.99, 'Spicy Tuna Poke Bowl'),
+(300765432, 75, 11.50, 'Salmon Poke Bowl'),
+(401098765, 40, 9.50, 'Hawaiian Classic Poke Bowl'),
+(500987654, 60, 10.99, 'Miso Ginger Poke Bowl'),
+(602345678, 80, 13.99, 'Pineapple Teriyaki Poke Bowl'),
+(700987654, 35, 12.50, 'Wasabi Shoyu Poke Bowl'),
+(801234567, 90, 14.50, 'Octopus Poke Bowl'),
+(900876543, 25, 9.99, 'Avocado Poke Bowl'),
+(100123456, 55, 11.99, 'Kimchi Poke Bowl');
+
+INSERT INTO Store (S_id, Location_name, Location_addrs, Lphone_number)
+VALUES (1, 'Kailua', '123 Main St', 8085551234),
+(2, 'Honolulu', '457 King St', 8085781043);
+
+INSERT INTO `Supplier` (`Supplier_name`) VALUES
+('UNFI'), 
+('Oahu Fresh'), 
+('HFA'), 
+('Ono Seafood Supplies'), 
+('Fish Supplies');
+
+INSERT INTO Purchases (C_id, P_id, Amount_spent, Visit_amt) 
+VALUES (123456789, 100123456, 15.99, 3),
+(234567890, 100987654, 8.50, 1),
+(345678901, 201234567, 22.75, 2),
+(456789012, 300765432, 18.25, 1),
+(567890123, 401098765, 12.50, 2),
+(678901234, 500987654, 27.80, 4),
+(789012345, 602345678, 14.99, 1),
+(890123456, 700987654, 19.99, 2),
+(901234567, 801234567, 6.75, 1),
+(987654321, 900876543, 33.00, 3);
+
+INSERT INTO Contains (P_id, S_id) 
+VALUES (100123456, 1),
+(100987654, 1),
+(201234567, 1),
+(300765432, 1),
+(401098765, 1),
+(500987654, 2),
+(602345678, 2),
+(700987654, 2),
+(801234567, 2),
+(900876543, 2);
+
+INSERT INTO Supplies (Supplier_name, P_id) 
+VALUES ('UNFI', 100987654), 
+('Oahu Fresh', 201234567), 
+('HFA', 300765432), 
+('Ono Seafood Supplies', 401098765), 
+('Fish Supplies', 500987654);
+
+
+/* Views */
+
+
+CREATE VIEW view_Sales_report AS 
+SELECT a.P_id AS Item_No, a.Product_name, a.Price, a.Quantity, a.Price * a.Quantity AS Total_Sales
+FROM Product a
+
+CREATE VIEW view_Inventory_report AS 
+SELECT a.P_id AS Item_No, a.Product_name, b.Supplier_name, a.Quantity AS Stock_Quantity, a.Price AS Cost_Per_Item, a.Price * a.Quantity AS Inv_value
+FROM Product a
+INNER JOIN Supplies b ON b.P_id = a.P_id
+
+CREATE VIEW View_Emp_Hours_Report AS
+SELECT Ename, hours_worked
+FROM Employee
+
+CREATE VIEW View_Customer_Sales_Report AS
+SELECT C_Name, Product_Name, Product.P_ID, Amount_Spent, Visit_amt
+FROM Product, Customer, Purchases
+WHERE Customer.C_ID = Purchases.C_ID AND Product.P_ID = Purchases.P_ID
+
+CREATE VIEW View_Most_Worked_Employee AS 
+SELECT Ename, hours_worked
+FROM Employee
+ORDER BY hours_worked DESC
+LIMIT 5
+
+CREATE VIEW View_Most_Popular_Product AS 
+SELECT a.Product_name
+FROM Product a
+INNER JOIN Purchases b ON a.P_id = b.P_id
+ORDER BY b.Amount_spent DESC
+
+CREATE VIEW View_Least_Popular_Product AS 
+SELECT a.Product_name
+FROM Product a
+INNER JOIN Purchases b ON a.P_id = b.P_id 
+ORDER BY B.Amount_spent ASC
+
+
+
+
+
+
+
+
+
