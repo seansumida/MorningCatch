@@ -165,6 +165,7 @@ INNER JOIN Supplies b ON b.P_id = a.P_id
 CREATE VIEW View_Hours_worked_Week AS
 SELECT Ename, hours_worked
 FROM Employee
+
 CREATE VIEW View_Customer_Sales_Report AS
 SELECT C_Name, Product_Name, Product.P_ID, Amount_Spent, Visit_amt
 FROM Product, Customer, Purchases
