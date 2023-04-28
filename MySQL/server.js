@@ -7,8 +7,23 @@ var nodemailer = require('nodemailer');
 var cookieParser = require('cookie-parser');
 var fs = require('fs');
 var qs = require('qs');
-
 const res = require('express/lib/response');
+var mysql = require('mysql');
+
+console.log("Connecting to localhost..."); 
+var con = mysql.createConnection({
+  host: '127.0.0.1',
+  user: "root",
+  port: 3306,
+  database: "Travel",
+  password: ""
+});
+
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 //Defines file in variable for later usage
 var filename = 'user_data.json';
 app.use(cookieParser());
@@ -45,7 +60,7 @@ app.post("/process_login", function (req, res) {
       res.cookie('session_id', req.sessionID, {maxAge: 5 * 60 * 1000});
       console.log(req.cookies);
     //  response.send(`cookie sent for ${users_name}`);
-    res.redirect('/invoice.html?' + 'email=' + req.body.email);
+    res.redirect('/index.html?');
     //This redirects to the invoice if the appropriate password is entered
     } else { //Wrong password
         LogError.push = ('Invalid Password');
@@ -275,8 +290,6 @@ app.get("/checkout", function (request, response) {
 }
   invoice_str += '</table>';
 
-
-
 //taken from Prof Ports assignment 3 example code
 // Set up mail server. Only will work on UH Network due to security restrictions
   var transporter = nodemailer.createTransport({
@@ -305,6 +318,236 @@ app.get("/checkout", function (request, response) {
     response.send(invoice_str);
   });
 
+});
+/*
+░██████╗░██╗░░░██╗███████╗██████╗░██╗███████╗░██████╗
+██╔═══██╗██║░░░██║██╔════╝██╔══██╗██║██╔════╝██╔════╝
+██║██╗██║██║░░░██║█████╗░░██████╔╝██║█████╗░░╚█████╗░
+╚██████╔╝██║░░░██║██╔══╝░░██╔══██╗██║██╔══╝░░░╚═══██╗
+░╚═██╔═╝░╚██████╔╝███████╗██║░░██║██║███████╗██████╔╝
+░░░╚═╝░░░░╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝╚══════╝╚═════╝░
+*/
+function popular_query(POST, response){
+  if(POST['category'] == 'most'){
+    category = JSON.stringify(POST['category']);
+    query = "SELECT guestNo, guestName FROM Guest"
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="popular.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].guestNo}</td>`;
+        response_form += `<td> ${res_json[i].guestName}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else if (POST['category'] == 'least'){
+    category = JSON.stringify(POST['category']);
+    query = "SELECT * FROM Guest "
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/queries/popular.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].guestAddress}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/popular", function(request, response){
+  let POST = request.body;
+  popular_query(POST, response);
+});
+
+function customers_query(POST, response){
+  if(isNonNegInt(POST['customers_id'])){
+    customerId = POST['customers_id'];
+    query = "SELECT * FROM Hotel WHERE hotelNo = " + customerId;
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/queries/Customer.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].hotelNo}</td>`;
+        response_form += `<td> ${res_json[i].hotelName}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/customers", function(request, response){
+  let POST = request.body;
+  customers_query(POST, response);
+});
+
+/*
+██████╗░███████╗██████╗░░█████╗░██████╗░████████╗░██████╗
+██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝
+██████╔╝█████╗░░██████╔╝██║░░██║██████╔╝░░░██║░░░╚█████╗░
+██╔══██╗██╔══╝░░██╔═══╝░██║░░██║██╔══██╗░░░██║░░░░╚═══██╗
+██║░░██║███████╗██║░░░░░╚█████╔╝██║░░██║░░░██║░░░██████╔╝
+╚═╝░░╚═╝╚══════╝╚═╝░░░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░
+*/
+function isNonNegInt(stringToCheck, returnErrors = false) {
+  errors = []; // assume no errors at first
+  if (Number(stringToCheck) != stringToCheck) errors.push('Not a number!'); // Check if string is a number value
+  if (stringToCheck < 0) errors.push('Negative value!'); // Check if it is non-negative
+  if (parseInt(stringToCheck) != stringToCheck) errors.push('Not an integer!'); // Check that it is an integer
+
+  return returnErrors ? errors : (errors.length == 0);
+}
+function employee_hours_report(POST, response){
+  if(isNonNegInt(POST['employee_id'])){
+    employeeId = POST['employee_id'];
+    query = "SELECT * FROM Guest WHERE guestNo = " + employeeId;
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/reports/Employee.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].guestNo}</td>`;
+        response_form += `<td> ${res_json[i].guestName}</td>`;
+        response_form += `<td> ${res_json[i].guestAddress}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/employee_hours", function(request, response){
+  let POST = request.body;
+  employee_hours_report(POST, response);
+});
+
+function most_hours_report(POST, response){
+  if(POST['most_hours'] != 'undefined'){
+    query = "SELECT * FROM Room ORDER BY roomNo DESC LIMIT 5";
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/reports/Employee.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].roomNo}</td>`;
+        response_form += `<td> ${res_json[i].hotelNo}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/most_hours", function(request, response){
+  let POST = request.body;
+  most_hours_report(POST, response);
+});
+
+function inventory_report(POST, response){
+  if(POST['inventory'] != 'undefined'){
+    query = "SELECT * FROM Booking";
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/reports/Inventory.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].hotelNo}</td>`;
+        response_form += `<td> ${res_json[i].guestNo}</td>`;
+        response_form += `<td> ${res_json[i].dateFrom}</td>`;
+        response_form += `<td> ${res_json[i].dateTo}</td>`;
+        response_form += `<td> ${res_json[i].roomNo}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/inventory", function(request, response){
+  let POST = request.body;
+  inventory_report(POST, response);
+});
+
+function sales_report(POST, response){
+  if(POST['sales'] != 'undefined'){
+    query = "SELECT * FROM Hotel";
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/reports/Sales.html" method="GET">`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].hotelNo}</td>`;
+        response_form += `<td> ${res_json[i].hotelName}</td>`;
+        response_form += `<td> ${res_json[i].city}</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/sales", function(request, response){
+  let POST = request.body;
+  sales_report(POST, response);
 });
 
 app.use(express.static('./public'));
