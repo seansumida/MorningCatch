@@ -172,20 +172,21 @@ FROM Product, Customer, Purchases
 WHERE Customer.C_ID = Purchases.C_ID AND Product.P_ID = Purchases.P_ID
 
 CREATE VIEW View_Most_Worked_Employee AS 
-SELECT TOP(5) Ename, hours_worked
+SELECT Ename, hours_worked
 FROM Employee
 ORDER BY hours_worked DESC
+LIMIT 5
 
-CREATE VIEW View_ Most_Popular_Product AS 
-SELECT A.Product_name
-FROM Product AS A, Purchases AS B
-WHERE A.P_id = B.P_id AND 
-ORDER BY B.Amount_spent DESC
+CREATE VIEW View_Most_Popular_Product AS 
+SELECT a.Product_name
+FROM Product a
+INNER JOIN Purchases b ON a.P_id = b.P_id
+ORDER BY b.Amount_spent DESC
 
 CREATE VIEW View_Least_Popular_Product AS 
-SELECT A.Product_name
-FROM Product AS A, Purchases AS B
-WHERE A.P_id = B.P_id AND 
+SELECT a.Product_name
+FROM Product a
+INNER JOIN Purchases b ON a.P_id = b.P_id 
 ORDER BY B.Amount_spent ASC
 
 
