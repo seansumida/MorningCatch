@@ -28,7 +28,7 @@ Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clot
         document.stop;
     }
     //nav_bar(this_product_key, products_data);
-    cart_total.innerHTML = total;
+    cart_total.innerHTML = total;     
 </script>
 
 <title>Morning Catch</title>
@@ -57,6 +57,14 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <a href="./index.html" class="w3-bar-item w3-button">Home</a>
     <a href="./display_products.html" class="w3-bar-item w3-button">Menu</a>
     <a href="./locations.html" class="w3-bar-item w3-button">Locations</a>
+    <a href="./queries.html" class="w3-bar-item w3-button">Queries</a>
+    <script>
+      const cookies = document.cookie;
+      const sessionId = cookies.split('; ').find(cookie => cookie.startsWith('session_id'));
+      if (sessionId) {
+        document.write('<a href="./manager_dash.html" class="w3-bar-item w3-button">help me</a>')
+      }
+    </script>
   </div>
   <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
   <a href="./login_page.html" class="w3-bar-item w3-button w3-padding">Login</a> 
@@ -95,9 +103,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   <div class="w3-display-container w3-container">
     <img src="./images/morningcatch/bowls.jpg" alt="keycap3" style="width: 100%">
     <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-      <h1 class="w3-jumbo w3-hide-small">New Menu Items</h1>
-      <h1 class="w3-hide-large w3-hide-medium">New Menu Items</h1>
-      <!--<h1 class="w3-hide-small">Artisan/Sets</h1> !-->
+      <h1 class="w3-jumbo w3-hide-small">Morning Catch</h1>
+      <h1 class="w3-hide-small">Premium Sashimi-Grade Poke</h1>
       <p><a href="./display_products.html" class="w3-button w3-black w3-padding-large w3-large">ORDER NOW</a></p>
     </div>
   </div>
