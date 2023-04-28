@@ -57,6 +57,14 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
     <a href="./index.html" class="w3-bar-item w3-button">Home</a>
     <a href="./display_products.html" class="w3-bar-item w3-button">Menu</a>
     <a href="./locations.html" class="w3-bar-item w3-button">Locations</a>
+    <a href="./queries.html" class="w3-bar-item w3-button">Queries</a>
+    <script>
+      const cookies = document.cookie;
+      const sessionId = cookies.split('; ').find(cookie => cookie.startsWith('session_id'));
+      if (sessionId) {
+        document.write('<a href="./manager_dash.html" class="w3-bar-item w3-button">Employees</a>')
+      }
+    </script>
   </div>
   <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a> 
   <a href="./login_page.html" class="w3-bar-item w3-button w3-padding">Login</a> 
