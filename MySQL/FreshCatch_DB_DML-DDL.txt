@@ -160,7 +160,7 @@ FROM Product a
 CREATE VIEW view_Inventory_report AS 
 SELECT a.P_id AS Item_No, a.Product_name, b.Supplier_name, a.Quantity AS Stock_Quantity, a.Price AS Cost_Per_Item, a.Price * a.Quantity AS Inv_value
 FROM Product a
-INNER JOIN Supplier b ON b.P_id = a.P_id
+INNER JOIN Supplies b ON b.P_id = a.P_id
 
 CREATE VIEW View_Hours_worked_Week AS
 SELECT Ename, hours_worked
