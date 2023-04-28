@@ -162,7 +162,7 @@ SELECT a.P_id AS Item_No, a.Product_name, b.Supplier_name, a.Quantity AS Stock_Q
 FROM Product a
 INNER JOIN Supplies b ON b.P_id = a.P_id
 
-CREATE VIEW View_Hours_worked_Week AS
+CREATE VIEW View_Emp_Hours_Report AS
 SELECT Ename, hours_worked
 FROM Employee
 
