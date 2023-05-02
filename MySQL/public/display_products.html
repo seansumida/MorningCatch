@@ -1,4 +1,4 @@
-<!--Author: Joey Nhieu Product Page
+<!--Author: Systematix Menu Page
 Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clothing_store.htm#-->
 <!DOCTYPE html>
 <head>
@@ -73,7 +73,7 @@ Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clot
     
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-      <p class="w3-left">Products</p>
+      <p class="w3-left">Menu</p>
       <p class="w3-right">
           <span id="cart_total">
             <script>
@@ -127,15 +127,15 @@ Template reference/used: https://www.w3schools.com/w3css/tryw3css_templates_clot
             
           
             <p class ="prodcentertext">${products[i]['name']}<br><b>$${products[i]['price']}</b><br>
-                Available: ${products[i]['stock_avl']}
+                What's in it: ${products[i]['info']}
                 <br>
                 <INPUT TYPE="TEXT"  name="quantities[${i}]" value="0">
                
                 <INPUT TYPE="hidden"  name="product_name" value="${products[i]['name']}">
                 <INPUT TYPE="SUBMIT"  name="submit" value="Add to Cart"> </p> 
 
-            </p> 
-  </FORM>
+            </p>  <br>
+  </FORM> 
                 
                 `;
                 }
