@@ -341,7 +341,7 @@ function popular_query(POST, response){
       response_form = `<form action="../queries/popular.html" method="GET">`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
-        response_form += `<tr><td> ${i+1}</td>`;
+        response_form += `<tr><td> ${i}</td>`;
         response_form += `<td> ${res_json[i].Product_name}</td>`;
       }
       response_form += "</table>";
@@ -362,7 +362,7 @@ function popular_query(POST, response){
       response_form = `<form action="/queries/popular.html" method="GET">`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
-        response_form += `<tr><td> ${i+1}</td>`;
+        response_form += `<tr><td> ${i}</td>`;
         response_form += `<td> ${res_json[i].Product_name}</td>`;
       }
       response_form += "</table>";
@@ -442,7 +442,8 @@ function employee_hours_report(POST, response){
       response_form = `<form action="/reports/Employee_hours.html" method="GET">`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
-        response_form += `<tr><td> ${res_json[i].Ename}</td>`;
+        response_form += `<tr><td> ${res_json[i].S_id}</td>`;
+        response_form += `<td> ${res_json[i].Ename}</td>`;
         response_form += `<td> ${res_json[i].hours_worked}</td>`;
       }
       response_form += "</table>";
