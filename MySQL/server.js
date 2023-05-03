@@ -339,6 +339,48 @@ function popular_query(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="../queries/popular.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Most Popular Items</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${i}</td>`;
@@ -360,6 +402,48 @@ function popular_query(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="/queries/popular.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Least Popular Items</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${i}</td>`;
@@ -390,6 +474,48 @@ function customers_query(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="/queries/Customer.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Customers Reports</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${res_json[i].P_ID}</td>`;
@@ -440,6 +566,48 @@ function employee_hours_report(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="/reports/Employee_hours.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Employee Hours by Store</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${res_json[i].S_id}</td>`;
@@ -471,6 +639,48 @@ function most_hours_report(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="/reports/Employee_hours.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Employees Hours Worked</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${res_json[i].Ename}</td>`;
@@ -501,6 +711,48 @@ function inventory_report(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="/reports/Inventory.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Inventory Report</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${res_json[i].Item_No}</td>`;
@@ -534,6 +786,48 @@ function sales_report(POST, response){
       console.log(res_json);
       //make table for output
       response_form = `<form action="/reports/Sales.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Sales Report</h1>`;
       response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
       for (i in res_json){
         response_form += `<tr><td> ${res_json[i].Item_No}</td>`;
