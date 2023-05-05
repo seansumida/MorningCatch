@@ -538,6 +538,80 @@ app.post("/customers", function(request, response){
   customers_query(POST, response);
 });
 
+function customers_rewards(POST, response){
+  if(isNonNegInt(POST['customers_id'])){
+    customerId = POST['customers_id'];
+    query = "SELECT Visit_amt FROM Purchases WHERE Purchases.C_id IN (SELECT Customer.C_id FROM Customer WHERE Customer.C_id = " 
+    + customerId +") ";
+    con.query(query, function(err, result, fields){
+      if (err) throw err;
+      console.log(result);
+      var res_string = JSON.stringify(result);
+      var res_json = JSON.parse(res_string);
+      console.log(res_json);
+      //make table for output
+      response_form = `<form action="/queries/Rewards.html" method="GET">`;
+      response_form += `<style>table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+      input {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      input:hover {
+        background-color: #3e8e41;
+      }
+      </style>`;
+      response_form += `<h1>Customers Rewards</h1>`;
+      response_form += `<table border="3" cellpadding="5" cellspacing="5">`;
+      for (i in res_json){
+        response_form += `<tr><td> ${res_json[i].Visit_amt} Visits</td>`;
+        response_form += `<td> ${10-parseInt(res_json[i].Visit_amt)} More visits for free poke bowl</td>`;
+      }
+      response_form += "</table>";
+      response_form += `<input type="submit" value="Click to Go Back"> </form>`;
+      response.send(response_form);
+    });
+    
+  } else{
+    response.send("Try Again");
+  }
+}
+app.post("/rewards", function(request, response){
+  let POST = request.body;
+  customers_rewards(POST, response);
+});
+
 /*
 ██████╗░███████╗██████╗░░█████╗░██████╗░████████╗░██████╗
 ██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝
